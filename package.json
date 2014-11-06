@@ -1,29 +1,30 @@
 {
-  "name": "diffie-hellman",
-  "version": "1.1.0",
-  "description": "pure js diffie-hellman",
+  "name": "createECDH",
+  "version": "1.0.0",
+  "description": "createECDH but browserifiable",
   "main": "index.js",
   "scripts": {
     "test": "node test.js | tspec"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/calvinmetcalf/diffie-hellman.git"
+    "url": "https://github.com/calvinmetcalf/createECDH.git"
   },
   "keywords": [
     "diffie",
     "hellman",
     "diffiehellman",
-    "dh"
+    "ECDH"
   ],
   "author": "Calvin Metcalf",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/calvinmetcalf/diffie-hellman/issues"
+    "url": "https://github.com/calvinmetcalf/createECDH/issues"
   },
-  "homepage": "https://github.com/calvinmetcalf/diffie-hellman",
+  "homepage": "https://github.com/calvinmetcalf/createECDH",
   "dependencies": {
-    "bn.js": "^0.15.0"
+    "bn.js": "^0.15.0",
+    "elliptic": "^0.15.14"
   },
   "devDependencies": {
     "tap-spec": "^1.0.1",

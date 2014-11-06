@@ -1,4 +1,4 @@
-diffie hellman [![Build Status](https://travis-ci.org/calvinmetcalf/diffie-hellman.svg)](https://travis-ci.org/calvinmetcalf/diffie-hellman)
+createECDH [![Build Status](https://travis-ci.org/calvinmetcalf/createECDH.svg)](https://travis-ci.org/calvinmetcalf/createECDH)
 ====
 
-pure js diffie-hellman, same api as node, 'modp17', 'modp18' don't work at the moment
+browserifiable version of node.createECDH like in node 0.11
