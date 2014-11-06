@@ -1,5 +1,5 @@
 {
-  "name": "createECDH",
+  "name": "create-ecdh",
   "version": "1.0.0",
   "description": "createECDH but browserifiable",
   "main": "index.js",
