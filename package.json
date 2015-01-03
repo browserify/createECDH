@@ -1,6 +1,6 @@
 {
   "name": "create-ecdh",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "createECDH but browserifiable",
   "main": "index.js",
   "scripts": {
