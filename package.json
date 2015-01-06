@@ -24,7 +24,7 @@
   "homepage": "https://github.com/calvinmetcalf/createECDH",
   "dependencies": {
     "bn.js": "^1.0.0",
-    "elliptic": "^0.15.14"
+    "elliptic": "^1.0.0"
   },
   "devDependencies": {
     "tap-spec": "^1.0.1",
