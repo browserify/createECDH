@@ -1,6 +1,10 @@
 var elliptic = require('elliptic');
 var BN = require('bn.js');
-module.exports = ECDH;
+
+module.exports = function createECDH(curve) {
+	return new ECDH(curve);
+};
+
 var aliases = {
 	secp256k1: {
 		name: 'secp256k1',
@@ -23,13 +27,12 @@ var aliases = {
 		byteLength: 32
 	}
 };
+
 aliases.p224 = aliases.secp224r1;
 aliases.p256 = aliases.secp256r1 = aliases.prime256v1;
 aliases.p192 = aliases.secp192r1 = aliases.prime192v1;
+
 function ECDH(curve) {
-	if (!(this instanceof ECDH)) {
-		return new ECDH(curve);
-	}
 	this.curveType = aliases[curve];
 	if (!this.curveType ) {
 		this.curveType = {
@@ -39,6 +42,7 @@ function ECDH(curve) {
 	this.curve = new elliptic.ec(this.curveType.name);
 	this.keys = void 0;
 }
+
 ECDH.prototype.generateKeys = function (enc, format) {
 	this.keys = this.curve.genKeyPair();
 	return this.getPublicKey(enc, format);
@@ -53,8 +57,9 @@ ECDH.prototype.computeSecret = function (other, inenc, enc) {
 	other = other.toString(16);
 	var otherPub = this.curve.keyPair(other, 'hex').getPublic();
 	var out = otherPub.mul(this.keys.getPrivate()).getX();
-	return returnValue(out, enc, this.curveType.byteLength);
+	return formatReturnValue(out, enc, this.curveType.byteLength);
 };
+
 ECDH.prototype.getPublicKey = function (enc, format) {
 	var key = this.keys.getPublic(format === 'compressed', true);
 	if (format === 'hybrid') {
@@ -64,10 +69,11 @@ ECDH.prototype.getPublicKey = function (enc, format) {
 			key [0] = 6;
 		}
 	}
-	return returnValue(key, enc);
+	return formatReturnValue(key, enc);
 };
+
 ECDH.prototype.getPrivateKey = function (enc) {
-	return returnValue(this.keys.getPrivate(), enc);
+	return formatReturnValue(this.keys.getPrivate(), enc);
 };
 
 ECDH.prototype.setPublicKey = function (pub, enc) {
@@ -78,7 +84,9 @@ ECDH.prototype.setPublicKey = function (pub, enc) {
 	var pkey = new BN(pub);
 	pkey = pkey.toArray();
 	this.keys._importPublicHex(pkey);
+	return this;
 };
+
 ECDH.prototype.setPrivateKey = function (priv, enc) {
 	enc = enc || 'utf8';
 	if (!Buffer.isBuffer(priv)) {
@@ -87,8 +95,10 @@ ECDH.prototype.setPrivateKey = function (priv, enc) {
 	var _priv = new BN(priv);
 	_priv = _priv.toString(16);
 	this.keys._importPrivate(_priv);
+	return this;
 };
-function returnValue(bn, enc, len) {
+
+function formatReturnValue(bn, enc, len) {
 	if (!Array.isArray(bn)) {
 		bn = bn.toArray();
 	}
