@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/calvinmetcalf/createECDH.git"
+    "url": "https://github.com/crypto-browserify/createECDH.git"
   },
   "keywords": [
     "diffie",
@@ -19,9 +19,9 @@
   "author": "Calvin Metcalf",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/calvinmetcalf/createECDH/issues"
+    "url": "https://github.com/crypto-browserify/createECDH/issues"
   },
-  "homepage": "https://github.com/calvinmetcalf/createECDH",
+  "homepage": "https://github.com/crypto-browserify/createECDH",
   "dependencies": {
     "bn.js": "^1.0.0",
     "elliptic": "^1.0.0"
