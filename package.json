@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "description": "createECDH but browserifiable",
   "main": "index.js",
+  "browser": "browser.js",
   "scripts": {
     "test": "node test.js | tspec"
   },
