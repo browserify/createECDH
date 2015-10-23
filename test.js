@@ -6,7 +6,9 @@ var mods = [
    'secp256k1',
    'secp224r1',
    'prime256v1',
-   'prime192v1'
+   'prime192v1',
+   'secp384r1',
+   'secp521r1'
 ];
 
 function run(i) {
@@ -62,6 +64,6 @@ function run(i) {
 
 
 var i = 0;
-while (++i < 100) {
+while (++i < 20) {
 	run(i);
 }
