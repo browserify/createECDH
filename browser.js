@@ -1,9 +1,9 @@
-var elliptic = require('elliptic');
-var BN = require('bn.js');
+var elliptic = require('elliptic')
+var BN = require('bn.js')
 
-module.exports = function createECDH(curve) {
-  return new ECDH(curve);
-};
+module.exports = function createECDH (curve) {
+  return new ECDH(curve)
+}
 
 var aliases = {
   secp256k1: {
@@ -34,94 +34,94 @@ var aliases = {
     name: 'p521',
     byteLength: 66
   }
-};
+}
 
-aliases.p224 = aliases.secp224r1;
-aliases.p256 = aliases.secp256r1 = aliases.prime256v1;
-aliases.p192 = aliases.secp192r1 = aliases.prime192v1;
-aliases.p384 = aliases.secp384r1;
-aliases.p521 = aliases.secp521r1;
+aliases.p224 = aliases.secp224r1
+aliases.p256 = aliases.secp256r1 = aliases.prime256v1
+aliases.p192 = aliases.secp192r1 = aliases.prime192v1
+aliases.p384 = aliases.secp384r1
+aliases.p521 = aliases.secp521r1
 
-function ECDH(curve) {
-  this.curveType = aliases[curve];
-  if (!this.curveType ) {
+function ECDH (curve) {
+  this.curveType = aliases[curve]
+  if (!this.curveType) {
     this.curveType = {
       name: curve
-    };
+    }
   }
-  this.curve = new elliptic.ec(this.curveType.name);
-  this.keys = void 0;
+  this.curve = new elliptic.ec(this.curveType.name) // eslint-disable-line new-cap
+  this.keys = void 0
 }
 
 ECDH.prototype.generateKeys = function (enc, format) {
-  this.keys = this.curve.genKeyPair();
-  return this.getPublicKey(enc, format);
-};
+  this.keys = this.curve.genKeyPair()
+  return this.getPublicKey(enc, format)
+}
 
 ECDH.prototype.computeSecret = function (other, inenc, enc) {
-  inenc = inenc || 'utf8';
+  inenc = inenc || 'utf8'
   if (!Buffer.isBuffer(other)) {
-    other = new Buffer(other, inenc);
+    other = new Buffer(other, inenc)
   }
-  var otherPub = this.curve.keyFromPublic(other).getPublic();
-  var out = otherPub.mul(this.keys.getPrivate()).getX();
-  return formatReturnValue(out, enc, this.curveType.byteLength);
-};
+  var otherPub = this.curve.keyFromPublic(other).getPublic()
+  var out = otherPub.mul(this.keys.getPrivate()).getX()
+  return formatReturnValue(out, enc, this.curveType.byteLength)
+}
 
 ECDH.prototype.getPublicKey = function (enc, format) {
-  var key = this.keys.getPublic(format === 'compressed', true);
+  var key = this.keys.getPublic(format === 'compressed', true)
   if (format === 'hybrid') {
     if (key[key.length - 1] % 2) {
-      key[0] = 7;
+      key[0] = 7
     } else {
-      key [0] = 6;
+      key[0] = 6
     }
   }
-  return formatReturnValue(key, enc);
-};
+  return formatReturnValue(key, enc)
+}
 
 ECDH.prototype.getPrivateKey = function (enc) {
-  return formatReturnValue(this.keys.getPrivate(), enc);
-};
+  return formatReturnValue(this.keys.getPrivate(), enc)
+}
 
 ECDH.prototype.setPublicKey = function (pub, enc) {
-  enc = enc || 'utf8';
+  enc = enc || 'utf8'
   if (!Buffer.isBuffer(pub)) {
-    pub = new Buffer(pub, enc);
+    pub = new Buffer(pub, enc)
   }
-  this.keys._importPublic(pub);
-  return this;
-};
+  this.keys._importPublic(pub)
+  return this
+}
 
 ECDH.prototype.setPrivateKey = function (priv, enc) {
-  enc = enc || 'utf8';
+  enc = enc || 'utf8'
   if (!Buffer.isBuffer(priv)) {
-    priv = new Buffer(priv, enc);
+    priv = new Buffer(priv, enc)
   }
 
   if (this.keys) {
-    var _priv = new BN(priv);
-    _priv = _priv.toString(16);
-    this.keys._importPrivate(_priv);
+    var _priv = new BN(priv)
+    _priv = _priv.toString(16)
+    this.keys._importPrivate(_priv)
   } else {
-    this.keys = this.curve.keyFromPrivate(priv);
+    this.keys = this.curve.keyFromPrivate(priv)
   }
-  return this;
-};
+  return this
+}
 
-function formatReturnValue(bn, enc, len) {
+function formatReturnValue (bn, enc, len) {
   if (!Array.isArray(bn)) {
-    bn = bn.toArray();
+    bn = bn.toArray()
   }
-  var buf = new Buffer(bn);
+  var buf = new Buffer(bn)
   if (len && buf.length < len) {
-    var zeros = new Buffer(len - buf.length);
-    zeros.fill(0);
-    buf = Buffer.concat([zeros, buf]);
+    var zeros = new Buffer(len - buf.length)
+    zeros.fill(0)
+    buf = Buffer.concat([zeros, buf])
   }
   if (!enc) {
-    return buf;
+    return buf
   } else {
-    return buf.toString(enc);
+    return buf.toString(enc)
   }
 }
