@@ -61,8 +61,8 @@ function run (i) {
     })
     test(mod + ' run ' + i + ' new way to set stuff', function (t) {
       t.plan(5)
-      var dh2 = myCrypto(mod)
       var dh1 = myCrypto(mod)
+      var dh2 = nodeCrypto(mod)
       dh2.generateKeys()
       dh1.setPrivateKey(dh2.getPrivateKey())
       var priv1 = dh1.getPrivateKey('hex')
