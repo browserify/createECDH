@@ -61,7 +61,7 @@ function run (i) {
     })
     test(mod + ' run ' + i + ' new way to set stuff', function (t) {
       t.plan(5)
-      var dh2 = nodeCrypto(mod)
+      var dh2 = myCrypto(mod)
       var dh1 = myCrypto(mod)
       dh2.generateKeys()
       dh1.setPrivateKey(dh2.getPrivateKey())
@@ -79,7 +79,32 @@ function run (i) {
     })
   })
 }
-
+apitests('api tests for my crypto', myCrypto)
+apitests('api tests for node crypto', nodeCrypto)
+function apitests (name, crypto) {
+  test(name, function (t) {
+    t.test('check about regenerating keys', function (t) {
+      t.plan(2)
+      var dh1 = crypto('secp256k1')
+      var dh2 = crypto('secp256k1')
+      dh1.generateKeys()
+      dh2.generateKeys()
+      var pub = dh1.getPublicKey('hex')
+      var priv = dh1.getPrivateKey('hex')
+      dh1.setPrivateKey(dh2.getPrivateKey())
+      t.notEquals(dh1.getPrivateKey('hex'), priv, 'private keys not equal')
+      t.notEquals(dh1.getPublicKey('hex'), pub, 'public keys not equal')
+    })
+    t.test('set private keys without generating them', function (t) {
+      t.plan(1)
+      var dh1 = crypto('secp256k1')
+      var dh2 = crypto('secp256k1')
+      dh2.generateKeys()
+      dh1.setPrivateKey(dh2.getPrivateKey())
+      t.equals(dh1.getPublicKey('hex'), dh1.getPublicKey('hex'), 'equal public keys')
+    })
+  })
+}
 var i = 0
 while (++i < 20) {
   run(i)

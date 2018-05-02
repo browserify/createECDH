@@ -99,13 +99,10 @@ ECDH.prototype.setPrivateKey = function (priv, enc) {
     priv = new Buffer(priv, enc)
   }
 
-  if (this.keys) {
-    var _priv = new BN(priv)
-    _priv = _priv.toString(16)
-    this.keys._importPrivate(_priv)
-  } else {
-    this.keys = this.curve.keyFromPrivate(priv)
-  }
+  var _priv = new BN(priv)
+  _priv = _priv.toString(16)
+  this.keys = this.curve.genKeyPair()
+  this.keys._importPrivate(_priv)
   return this
 }
 
