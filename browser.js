@@ -98,8 +98,10 @@ ECDH.prototype.setPrivateKey = function (priv, enc) {
 	if (!Buffer.isBuffer(priv)) {
 		priv = new Buffer(priv, enc);
 	}
+
 	var _priv = new BN(priv);
 	_priv = _priv.toString(16);
+	this.generateKeys();
 	this.keys._importPrivate(_priv);
 	return this;
 };
