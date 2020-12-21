@@ -61,7 +61,7 @@ ECDH.prototype.generateKeys = function (enc, format) {
 ECDH.prototype.computeSecret = function (other, inenc, enc) {
   inenc = inenc || 'utf8'
   if (!Buffer.isBuffer(other)) {
-    other = new Buffer(other, inenc)
+    other = Buffer.from(other, inenc)
   }
   var otherPub = this.curve.keyFromPublic(other).getPublic()
   var out = otherPub.mul(this.keys.getPrivate()).getX()
@@ -87,7 +87,7 @@ ECDH.prototype.getPrivateKey = function (enc) {
 ECDH.prototype.setPublicKey = function (pub, enc) {
   enc = enc || 'utf8'
   if (!Buffer.isBuffer(pub)) {
-    pub = new Buffer(pub, enc)
+    pub = Buffer.from(pub, enc)
   }
   this.keys._importPublic(pub)
   return this
@@ -96,7 +96,7 @@ ECDH.prototype.setPublicKey = function (pub, enc) {
 ECDH.prototype.setPrivateKey = function (priv, enc) {
   enc = enc || 'utf8'
   if (!Buffer.isBuffer(priv)) {
-    priv = new Buffer(priv, enc)
+    priv = Buffer.from(priv, enc)
   }
 
   var _priv = new BN(priv)
@@ -110,9 +110,9 @@ function formatReturnValue (bn, enc, len) {
   if (!Array.isArray(bn)) {
     bn = bn.toArray()
   }
-  var buf = new Buffer(bn)
+  var buf = Buffer.from(bn)
   if (len && buf.length < len) {
-    var zeros = new Buffer(len - buf.length)
+    var zeros = Buffer.alloc(len - buf.length)
     zeros.fill(0)
     buf = Buffer.concat([zeros, buf])
   }
