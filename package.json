@@ -1,6 +1,6 @@
 {
   "name": "create-ecdh",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "createECDH but browserifiable",
   "main": "index.js",
   "browser": "browser.js",
@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/crypto-browserify/createECDH",
   "dependencies": {
-    "bn.js": "^4.1.0",
-    "elliptic": "^6.5.3"
+    "bn.js": "^4.12.2",
+    "elliptic": "^6.6.1"
   },
   "devDependencies": {
     "tap-spec": "^1.0.1",
