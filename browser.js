@@ -3,6 +3,8 @@
 var elliptic = require('elliptic');
 var BN = require('bn.js');
 
+var isArray = Array.isArray;
+
 var aliases = {
 	ed25519: {
 		byteLength: 32,
@@ -43,7 +45,7 @@ aliases.p384 = aliases.secp384r1;
 aliases.p521 = aliases.secp521r1;
 
 function formatReturnValue(bn, enc, len) {
-	var arr = Array.isArray(bn) ? bn : bn.toArray();
+	var arr = isArray(bn) ? bn : bn.toArray();
 	var buf = new Buffer(arr);
 	if (len && buf.length < len) {
 		var zeros = new Buffer(len - buf.length);
