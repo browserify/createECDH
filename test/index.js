@@ -1,6 +1,6 @@
 var test = require('tape')
-var nodeCrypto = require('./')
-var myCrypto = require('./browser')
+var nodeCrypto = require('../')
+var myCrypto = require('../browser')
 
 var mods = [
   'secp256k1',
