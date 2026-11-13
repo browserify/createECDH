@@ -75,10 +75,21 @@ ECDH.prototype.generateKeys = function (enc, format) {
 	return this.getPublicKey(enc, format);
 };
 
+function validPublicKey(curve, pubBuf) {
+	var key = curve.keyFromPublic(pubBuf);
+	// rejects the point at infinity, points not on the curve, and points outside the prime-order subgroup
+	var pub = key.getPublic();
+	// elliptic's Montgomery ladder wrongly reports n * (x = 0) as infinity, so that low-order point passes `validate`
+	if (!key.validate().result || (curve.curve.type === 'mont' && pub.getX().isZero())) {
+		throw new Error('Public key is not valid for specified curve');
+	}
+	return pub;
+}
+
 ECDH.prototype.computeSecret = function (other, inenc, enc) {
 	var otherBuf = Buffer.isBuffer(other) ? other : new Buffer(other, inenc || 'utf8');
-	var otherPub = this.curve.keyFromPublic(otherBuf).getPublic();
-	var out = otherPub.mul(this.keys.getPrivate()).getX();
+	var otherPub = validPublicKey(this.curve, otherBuf);
+	var out = this.keys.derive(otherPub);
 	return formatReturnValue(out, enc, this.curveType.byteLength);
 };
 
@@ -100,7 +111,7 @@ ECDH.prototype.getPrivateKey = function (enc) {
 
 ECDH.prototype.setPublicKey = function (pub, enc) {
 	var pubBuf = Buffer.isBuffer(pub) ? pub : new Buffer(pub, enc || 'utf8');
-	this.keys._importPublic(pubBuf);
+	this.keys.pub = validPublicKey(this.curve, pubBuf);
 	return this;
 };
 
