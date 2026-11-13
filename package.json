@@ -36,8 +36,8 @@
   },
   "homepage": "https://github.com/crypto-browserify/createECDH",
   "dependencies": {
-    "bn.js": "^4.1.0",
-    "elliptic": "^6.5.3"
+    "bn.js": "^4.12.5",
+    "elliptic": "^6.6.1"
   },
   "devDependencies": {
     "@ljharb/eslint-config": "^22.2.5",
