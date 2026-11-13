@@ -11,18 +11,9 @@ export default [
 		},
 	},
 	{
-		files: ['**/*.js'],
-		rules: {
-			indent: ['error', 2],
-			semi: ['error', 'never'],
-			'space-before-function-paren': ['error', 'always'],
-		},
-	},
-	{
 		files: ['browser.js'],
 		rules: {
 			'no-buffer-constructor': 'off',
-			'no-else-return': 'off',
 			'no-multi-assign': 'off',
 			'no-negated-condition': 'off',
 			'no-param-reassign': 'off',
