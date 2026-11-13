@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v4.0.5](https://github.com/browserify/createECDH/compare/v4.0.4...v4.0.5) - 2026-11-13
+
+### Commits
+
+- [eslint] remove autofixable overrides [`0d88756`](https://github.com/browserify/createECDH/commit/0d88756535ce694d513cf9f4586a66194c48db2e)
+- [meta] modernize the package [`25eea4b`](https://github.com/browserify/createECDH/commit/25eea4bc4aec9a77e1d0e3c8da4ff06e31b614f5)
+- [eslint] remove remaining overrides [`f733f24`](https://github.com/browserify/createECDH/commit/f733f2491f804ff4faa759c65cbfb75aa028466d)
+- [Fix] `computeSecret`, `setPublicKey`: reject public keys that are invalid for the curve [`1cfaf33`](https://github.com/browserify/createECDH/commit/1cfaf332773237e5fea4b51a2ad3efab4c22bec1)
+- [meta] switch to eslint [`cdd622f`](https://github.com/browserify/createECDH/commit/cdd622f17b1a5948eb823352515444fa46367009)
+- [Fix] use the JS implementation when native `setPrivateKey` does not compute the public key [`13fadb6`](https://github.com/browserify/createECDH/commit/13fadb63b6be0e72fa1917b0396fdc9f28858684)
+- [Deps] update `bn.js`, `elliptic` [`3adc987`](https://github.com/browserify/createECDH/commit/3adc987435d3849600267cd108bdaa83e1e52ab4)
+- [Robustness] cache `Array.isArray` at module level [`4b33188`](https://github.com/browserify/createECDH/commit/4b33188665910b01c9e8472853bf8e4787204bf4)
+- [meta] add missing auto-changelog settings [`bc21216`](https://github.com/browserify/createECDH/commit/bc212162ed25c069c9586f7a537afd60fde1f0fd)
+
 ## [v4.0.4](https://github.com/browserify/createECDH/compare/v4.0.3...v4.0.4) - 2020-08-04
 
 ### Merged
