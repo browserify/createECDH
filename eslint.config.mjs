@@ -4,34 +4,21 @@ export default [
 	...ljharb,
 	{
 		rules: {
-			'func-style': 'off',
+			'func-style': ['error', 'declaration'],
 			'no-magic-numbers': 'off',
-			'no-use-before-define': 'off',
-			strict: 'off',
 		},
 	},
 	{
 		files: ['browser.js'],
 		rules: {
 			'no-buffer-constructor': 'off',
-			'no-multi-assign': 'off',
-			'no-negated-condition': 'off',
-			'no-param-reassign': 'off',
 			'no-underscore-dangle': 'off',
-			'sort-keys': 'off',
 		},
 	},
 	{
 		files: ['index.js'],
 		rules: {
 			'global-require': 'off',
-		},
-	},
-	{
-		files: ['test/**'],
-		rules: {
-			'no-plusplus': 'off',
-			'no-shadow': 'off',
 		},
 	},
 ];

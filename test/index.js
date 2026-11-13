@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 var nodeCrypto = require('../');
 var myCrypto = require('../browser');
@@ -79,12 +81,10 @@ function run(i) {
 		});
 	});
 }
-apitests('api tests for my crypto', myCrypto);
-apitests('api tests for node crypto', nodeCrypto);
 function apitests(name, crypto) {
 	test(name, function (t) {
-		t.test('check about regenerating keys', function (t) {
-			t.plan(2);
+		t.test('check about regenerating keys', function (st) {
+			st.plan(2);
 			var dh1 = crypto('secp256k1');
 			var dh2 = crypto('secp256k1');
 			dh1.generateKeys();
@@ -92,20 +92,21 @@ function apitests(name, crypto) {
 			var pub = dh1.getPublicKey('hex');
 			var priv = dh1.getPrivateKey('hex');
 			dh1.setPrivateKey(dh2.getPrivateKey());
-			t.notEquals(dh1.getPrivateKey('hex'), priv, 'private keys not equal');
-			t.notEquals(dh1.getPublicKey('hex'), pub, 'public keys not equal');
+			st.notEquals(dh1.getPrivateKey('hex'), priv, 'private keys not equal');
+			st.notEquals(dh1.getPublicKey('hex'), pub, 'public keys not equal');
 		});
-		t.test('set private keys without generating them', function (t) {
-			t.plan(1);
+		t.test('set private keys without generating them', function (st) {
+			st.plan(1);
 			var dh1 = crypto('secp256k1');
 			var dh2 = crypto('secp256k1');
 			dh2.generateKeys();
 			dh1.setPrivateKey(dh2.getPrivateKey());
-			t.equals(dh1.getPublicKey('hex'), dh1.getPublicKey('hex'), 'equal public keys');
+			st.equals(dh1.getPublicKey('hex'), dh1.getPublicKey('hex'), 'equal public keys');
 		});
 	});
 }
-var i = 0;
-while (++i < 20) {
+apitests('api tests for my crypto', myCrypto);
+apitests('api tests for node crypto', nodeCrypto);
+for (var i = 1; i < 20; i += 1) {
 	run(i);
 }
